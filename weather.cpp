@@ -4,7 +4,7 @@
 #define HOST "api.openweathermap.org"
 #define PORT 80
 #define PATH "/data/2.5/weather?q=Khouribga&appid=010b99d131be7191865d4110f87f7db3"
-
+//3
 
 
 #define API_KEY "010b99d131be7191865d4110f87f7db3"
@@ -62,7 +62,6 @@ int main(int ac, char **av) {
     // request += "Accept: */*\r\n";
     // request += "Accept-Encoding: gzip, deflate, br\r\n";
     // request += "Connection: keep-alive\r\n";
-    // request += "User-Agent: HTTPie/3.2.2\r\n";
 
 
     if (send(sock, request.c_str(), request.length(), 0) < 0) {
