@@ -1,8 +1,10 @@
 #include "../include/ircBot.hpp"
 
-int createTCPSock(void) throw() {
+int
+createTCPSock(void) throw()
+{
     int newSock;
-    
+
     if ((newSock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         return -1;
     // if (fcntl(newSock, F_SETFL, fcntl(newSock, F_GETFL, 0) | O_NONBLOCK) < 0)
@@ -10,7 +12,9 @@ int createTCPSock(void) throw() {
     return newSock;
 };
 
-bool connectSockByName(int socket, const char *hostbyname, int port) throw() {
+bool
+connectSockByName(int socket, const char *hostbyname, int port) throw()
+{
     hostent *serverNick;
 
     if ((serverNick = gethostbyname(hostbyname)) == NULL) {
@@ -31,7 +35,9 @@ bool connectSockByName(int socket, const char *hostbyname, int port) throw() {
     return true;
 };
 
-bool connectSockByIp(int socket, const char *ip_addr, int port) {
+bool
+connectSockByIp(int socket, const char *ip_addr, int port)
+{
     sockaddr_in server_addr;
 
     std::memset(&server_addr, 0, sizeof(server_addr));
@@ -46,7 +52,9 @@ bool connectSockByIp(int socket, const char *ip_addr, int port) {
     return true;
 };
 
-inline void sendit(int sock, std::string& msg) {
+inline void
+sendit(int sock, std::string& msg)
+{
     msg += "\r\n";
     // __LOG(msg, BLUE);
     if (send(sock, msg.c_str(), msg.length(), 0) == -1 ) {
@@ -55,7 +63,9 @@ inline void sendit(int sock, std::string& msg) {
     }
 };
 
-std::string jsonValue(const std::string& json, const std::string& key) throw() {
+std::string
+jsonValue(const std::string& json, const std::string& key) throw()
+{
     size_t keyPos = json.find(key);
     if (keyPos == std::string::npos) return "";
 
@@ -73,7 +83,9 @@ std::string jsonValue(const std::string& json, const std::string& key) throw() {
     return value;
 };
 
-std::string revcit(int sock) {
+std::string
+revcit(int sock)
+{
     int bytes = 0;
     char BUFFER[4096];
     
@@ -89,15 +101,19 @@ std::string revcit(int sock) {
     return BUFFER;
 };
 
-std::string trimTheSpaces(const std::string& str) throw() {
-    size_t first = str.find_first_not_of(" \t\r\n");            
+std::string
+trimTheSpaces(const std::string& str) throw()
+{
+    size_t first = str.find_first_not_of(" \t\r\n");
     if (first == std::string::npos)
         return "";
     size_t last = str.find_last_not_of(" \t\r\n");
     return str.substr(first, last - first + 1);
 };
 
-std::vector<std::string> splitMessage(const std::string& message) throw() {
+std::vector<std::string>
+splitMessage(const std::string& message) throw()
+{
     std::string part;
     std::vector<std::string> parts;
     std::istringstream iss(message);
@@ -114,4 +130,47 @@ std::vector<std::string> splitMessage(const std::string& message) throw() {
     }
 
     return parts;
+};
+
+uint16_t
+valid_port(char *port_arg)
+{
+    size_t i;
+
+    std::cout << port_arg << std::endl;
+    for (i = 0; port_arg[i] ;i++)
+    {
+        if (!isdigit(port_arg[i]) || i > 5)
+        {
+            std::cerr << "Error: Port range between 1024 && 65535." << std::endl; 
+            return 1;
+        }
+    }
+    uint32_t port = atoi(port_arg);
+    if (1024 > port || 65535 < port)
+    {
+        std::cerr << "Error: Port range between 1024 && 65535." << std::endl; 
+        return 1;
+    }
+    return port;
+};
+
+uint16_t
+arg_checker(int ac, char **av)
+{
+    switch (ac)
+    {
+        case 2 :
+            std::cerr <<"ERROR: "  "IRC Bot missing argument <password>" << std::endl;
+            return 1;
+        case 3 :
+            uint16_t port;
+
+            if (!(port = valid_port(av[1])))
+                return 1;
+            return port;
+        default :
+            std::cerr << "ERROR: "  "IRC Bot requare 2 arguments. \n"  "try ./bot <port> <password>" << std::endl;
+            return 1;
+    }
 };
