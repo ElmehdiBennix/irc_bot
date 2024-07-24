@@ -1,4 +1,4 @@
-#include "../include/ircBot.hpp"
+#include "include/ircBot.hpp"
 
 int main(int ac, char **av) {
     uint16_t port;
