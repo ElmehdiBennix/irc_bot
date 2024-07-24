@@ -110,14 +110,15 @@ Bot::listenForCommand(void)
 };
 
 bool    
-Bot::masterStatus(const std::string &name) const
+Bot::masterStatus(const std::string &name)
 {
     std::string command;
 
-    for (const std::string &master : masters) {
-        if (name == master)
+    for (std::vector<std::string>::iterator it = masters.begin(); it != masters.end(); ++it) {
+        if (name == *it)
             return true;
     }
+
     command = "PRIVMSG " + name + SUDOERROR;
     sendit(this->irc_sock, command);
     return false;

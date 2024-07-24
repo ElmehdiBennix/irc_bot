@@ -12,16 +12,16 @@ class Bot {
         std::vector<std::string> masters;
         std::vector<std::string> channels;
 
-        using commandFunc = void (Bot::*) (const std::vector<std::string>&);
+        typedef void (Bot::*commandFunc) (const std::vector<std::string>&);
         std::map<std::string, commandFunc> commandList;
 
     private:
         void            logger(const std::string &message) const;
-        bool            masterStatus(const std::string &name) const;
+        bool            masterStatus(const std::string &name);
 
-        void     pongCommand(const std::vector<std::string> &fields);
-        void     welcomeMsg(const std::vector<std::string> &fields);
-        void     leaveMsg(const std::vector<std::string> &fields);
+        void            pongCommand(const std::vector<std::string> &fields);
+        void            welcomeMsg(const std::vector<std::string> &fields);
+        void            leaveMsg(const std::vector<std::string> &fields);
         void            helpCommand(const std::vector<std::string> &fields);
         void            jokeCommand(const std::vector<std::string> &fields);
         void            tossCommand(const std::vector<std::string> &fields);
