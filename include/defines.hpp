@@ -1,11 +1,11 @@
 #if !defined(DEFINES_HPP__)
 #define DEFOMES_HPP__
 
-
+// Settings:
 #define BOT "elgarodumomento"
 #define LOCALHOST "127.0.0.1"
 
-
+// Colors:
 #define RESET "\033[0m"
 #define BLACK "\033[30m"
 #define RED "\033[31m"
@@ -16,7 +16,7 @@
 #define CYAN "\033[36m"
 #define WHITE "\033[37m"
 
-
+// JOIN/PART msgs:
 #define WELCOME(channel) " :Welcome to " + channel + " hope u like it here type /help in u need help."
 #define FAREWELL(channel) " :hope i served u well come back soon " BOT
 
@@ -34,10 +34,10 @@
                     " :      - set  {api_key}      : Set a The api key for" HOST ".\r\n",                               \
                     " :      - display {masters/channels}    : List masters or channels the bot is currently in.\r\n",  \
                 }
-                    // " :/poll {option} {arg}  : Poll command with options:",                                 \
-                    // " :     - list                 : List all available polls.",                            \
-                    // " :     - create {question}    : Create a new poll with the given question.",           \
-                    // " :     - vote   {poll_id}     : Vote for a poll option.",                              \
+                    // " :/poll {option} {arg}  : Poll command with options:",                                          \
+                    // " :     - list                 : List all available polls.",                                     \
+                    // " :     - create {question}    : Create a new poll with the given question.",                    \
+                    // " :     - vote   {poll_id}     : Vote for a poll option.",                                       \
 
 #define JOKES   {                                                                                                       \
                     "Why don't scientists trust atoms? Because they make up everything!",                               \
@@ -123,7 +123,7 @@
                     "How do you make a tissue dance? Put a little boogie in it."                                        \
                 }
 
-
+// weather command:
 #define HOST "api.openweathermap.org"
 #define PORT 80
 #define KEY "010b99d131be7191865d4110f87f7db3"
@@ -131,6 +131,7 @@
 // if password is empty string it catches a fatal error // TODO
 // ERR_NOTREGISTERED (451) // TODO ADD IT TO IRC AUTHEN 
 
+// Error codes:
 #define ERR_NONICKNAMEGIVEN 431
 #define ERR_ERRONEUSNICKNAME 432
 #define ERR_NICKNAMEINUSE 433

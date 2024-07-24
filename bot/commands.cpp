@@ -1,6 +1,8 @@
 #include "../include/ircBot.hpp"
 
-void    Bot::jokeCommand(const std::vector<std::string> &fields) {
+void
+Bot::jokeCommand(const std::vector<std::string> &fields)
+{
     const char* jokes[] = JOKES;
 
     const int numJokes = sizeof(jokes) / sizeof(jokes[0]);
@@ -15,7 +17,9 @@ void    Bot::jokeCommand(const std::vector<std::string> &fields) {
     sendit(this->irc_sock, command);
 };
 
-void    Bot::tossCommand(const std::vector<std::string> &fields) {
+void
+Bot::tossCommand(const std::vector<std::string> &fields)
+{
     int result;
     std::string command;
     const std::string &client = __GETARGET;
@@ -30,7 +34,9 @@ void    Bot::tossCommand(const std::vector<std::string> &fields) {
     sendit(this->irc_sock, command);
 };
 
-        const std::map<std::string, std::string> Bot::extractWeatherData(const std::string &response) {
+const std::map<std::string, std::string>
+Bot::extractWeatherData(const std::string &response)
+{
     std::map<std::string, std::string> weatherData;
 
     weatherData["longitude"] = jsonValue(response, "lon");
@@ -49,9 +55,11 @@ void    Bot::tossCommand(const std::vector<std::string> &fields) {
     weatherData["city"] = jsonValue(response, "name");
 
     return weatherData;
-}
+};
 
-std::string Bot::getWeatherData(const std::map<std::string, std::string>& weatherData , const std::string &client) {
+std::string
+Bot::getWeatherData(const std::map<std::string, std::string>& weatherData , const std::string &client)
+{
     std::ostringstream message;
 
     try {
@@ -69,9 +77,11 @@ std::string Bot::getWeatherData(const std::map<std::string, std::string>& weathe
         std::cerr << e.what() << std::endl;
     }
     return (message.str());
-}
+};
 
-void    Bot::weatherCommand(const std::vector<std::string> &fields) {  // can reply to the channel
+void
+Bot::weatherCommand(const std::vector<std::string> &fields)
+{
     std::string command;
     const std::string &client = __GETARGET;
 
@@ -115,14 +125,17 @@ void    Bot::weatherCommand(const std::vector<std::string> &fields) {  // can re
     sendit(this->irc_sock, command);
 };
 
-// void    bot::pollCommand(const std::vector<std::string> &fields) {  // can reply to the channel
+// void
+// bot::pollCommand(const std::vector<std::string> &fields) {
 //     std::string command;
 //     const std::string &client = __GETARGET;
 //     // Creates and manages polls within the channel.
 //     // Collects votes and displays results.
 // };
 
-void    Bot::helpCommand(const std::vector<std::string> &fields) { // can reply to the channel
+void
+Bot::helpCommand(const std::vector<std::string> &fields)
+{
     std::string command;
     const char *manual[] = MANUAL;
     const std::string &client = __GETARGET;  // make a loop of 200ms delay between msgs
@@ -135,22 +148,30 @@ void    Bot::helpCommand(const std::vector<std::string> &fields) { // can reply 
     sendit(this->irc_sock, command);
 };
 
-inline void    Bot::welcomeMsg(const std::vector<std::string> &fields) {
+inline void
+Bot::welcomeMsg(const std::vector<std::string> &fields)
+{
     std::string command = "PRIVMSG " + fields[0] + WELCOME(fields[2]); 
     sendit(this->irc_sock, command);
 };
 
-inline void    Bot::leaveMsg(const std::vector<std::string> &fields) {
+inline void
+Bot::leaveMsg(const std::vector<std::string> &fields)
+{
     std::string command = "PRIVMSG " + fields[0] + FAREWELL(fields[2]);
     sendit(this->irc_sock, command);
 };
 
-inline void    Bot::pongCommand(const std::vector<std::string> &fields) {
+inline void
+Bot::pongCommand(const std::vector<std::string> &fields)
+{
     std::string command = "PONG " + fields[1];
     sendit(this->irc_sock, command);
 };
 
-void    Bot::adminCommand(const std::vector<std::string> &fields) {
+void
+Bot::adminCommand(const std::vector<std::string> &fields)
+{
     std::string command;
     const std::string &action = fields[4];
     std::vector<std::string>::iterator it;
@@ -206,3 +227,9 @@ void    Bot::adminCommand(const std::vector<std::string> &fields) {
         sendit(this->irc_sock, command);
     }
 };
+
+// inline void
+// Bot::unavailbleCommand(const std::vector<std::string> &fields) {
+//     const std::string &client = __GETARGET;
+//     std::string commnad = "PRIVMSG " + client + " :" + fields[3] + "command unavailbe, contact a master";
+// }

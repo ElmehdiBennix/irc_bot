@@ -1,6 +1,7 @@
 #include "../include/ircBot.hpp"
 
-Bot::Bot(void) {
+Bot::Bot(void) 
+{
     std::string master;
 
     std::cout << "whats ur server Nickname master :";
@@ -45,7 +46,9 @@ Bot::Bot(void) {
     commandList["/admin"] = &Bot::adminCommand;
 };
 
-void Bot::authenticate(std::string password) const {
+void
+Bot::authenticate(std::string password) const
+{
     std::string message;
 
     if (password.empty())
@@ -62,7 +65,9 @@ void Bot::authenticate(std::string password) const {
     // sendit(this->irc_sock, message);
 };
 
-void    Bot::logger(const std::string &message) const {
+void
+Bot::logger(const std::string &message) const
+{
     int code;
     std::string output;
     std::istringstream stream(message);
@@ -79,7 +84,9 @@ void    Bot::logger(const std::string &message) const {
         __LOG(message, GREEN)
 };
 
-void Bot::listenForCommand(void) {
+void 
+Bot::listenForCommand(void)
+{
     while (true) {
         std::string message;
         if ((message = revcit(this->irc_sock)) == "")
@@ -102,7 +109,9 @@ void Bot::listenForCommand(void) {
     }
 };
 
-bool    Bot::masterStatus(const std::string &name) const {
+bool    
+Bot::masterStatus(const std::string &name) const
+{
     std::string command;
 
     for (const std::string &master : masters) {
@@ -114,7 +123,9 @@ bool    Bot::masterStatus(const std::string &name) const {
     return false;
 };
 
-void Bot::startBot(uint16_t port) {
+void 
+Bot::startBot(uint16_t port)
+{
     std::string answer;
 
     std::cout << "connect using :\n     1 - using LOCALHOST.\n     2 - using ip address.\n     3 - using domain name.\n" << std::endl; // hardcoded for now 
@@ -137,12 +148,11 @@ void Bot::startBot(uint16_t port) {
     } else {
         close(this->irc_sock);
         throw (std::invalid_argument("Only [1/2/3] are allowed."));
-}
+    }
 };
 
-// inline void    Bot::unavailbleCommand(const std::vector<std::string> &fields) {
-//     const std::string &client = __GETARGET;
-//     std::string commnad = "PRIVMSG " + client + " :" + fields[3] + "command unavailbe, contact a master";
-// }
 
-Bot::~Bot() {};
+Bot::~Bot()
+{
+    close(this->irc_sock);
+};
