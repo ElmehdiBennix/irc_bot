@@ -34,10 +34,10 @@
                     " :      - set  {api_key}      : Set a The api key for" HOST ".\r\n",                               \
                     " :      - display {masters/channels}    : List masters or channels the bot is currently in.\r\n",  \
                 }
-                    // " :/poll {option} {arg}  : Poll command with options:",                                          \
-                    // " :     - list                 : List all available polls.",                                     \
-                    // " :     - create {question}    : Create a new poll with the given question.",                    \
-                    // " :     - vote   {poll_id}     : Vote for a poll option.",                                       \
+// " :/poll {option} {arg}  : Poll command with options:",                      
+// " :     - list                 : List all available polls.",                 
+// " :     - create {question}    : Create a new poll with the given question.",
+// " :     - vote   {poll_id}     : Vote for a poll option.",                   
 
 #define JOKES   {                                                                                                       \
                     "Why don't scientists trust atoms? Because they make up everything!",                               \

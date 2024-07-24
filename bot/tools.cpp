@@ -52,7 +52,7 @@ connectSockByIp(int socket, const char *ip_addr, int port)
     return true;
 };
 
-inline void
+void
 sendit(int sock, std::string& msg)
 {
     msg += "\r\n";
@@ -133,7 +133,7 @@ splitMessage(const std::string& message) throw()
 };
 
 uint16_t
-valid_port(char *port_arg)
+valid_port(char *port_arg) throw()
 {
     size_t i;
 
@@ -156,7 +156,7 @@ valid_port(char *port_arg)
 };
 
 uint16_t
-arg_checker(int ac, char **av)
+arg_checker(int ac, char **av) throw()
 {
     switch (ac)
     {

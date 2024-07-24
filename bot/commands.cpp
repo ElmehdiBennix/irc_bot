@@ -97,7 +97,6 @@ Bot::weatherCommand(const std::vector<std::string> &fields)
             return;
         }
 
-        std::map<std::string, std::string> weatherData;
         std::string response;
         std::string request = "GET /data/2.5/weather?q=" + fields[4] + "&appid=" + API_KEY + " HTTP/1.1\r\n";
         request += "Host: " HOST "\r\n";
@@ -148,21 +147,21 @@ Bot::helpCommand(const std::vector<std::string> &fields)
     sendit(this->irc_sock, command);
 };
 
-inline void
+void
 Bot::welcomeMsg(const std::vector<std::string> &fields)
 {
     std::string command = "PRIVMSG " + fields[0] + WELCOME(fields[2]); 
     sendit(this->irc_sock, command);
 };
 
-inline void
+void
 Bot::leaveMsg(const std::vector<std::string> &fields)
 {
     std::string command = "PRIVMSG " + fields[0] + FAREWELL(fields[2]);
     sendit(this->irc_sock, command);
 };
 
-inline void
+void
 Bot::pongCommand(const std::vector<std::string> &fields)
 {
     std::string command = "PONG " + fields[1];
@@ -207,12 +206,12 @@ Bot::adminCommand(const std::vector<std::string> &fields)
             command = "PRIVMSG " + fields[0];
             if (fields[5] == "masters") {
                 command += " :Masters =";
-                for (const std::string name: masters) {
+                for (const std::string &name: masters) {
                     command += " " + name;
                 }
             } else if (fields[5] == "channels") {
                 command += " :Channels =";
-                for (const std::string name: channels) {
+                for (const std::string &name: channels) {
                     command += " " + name;
                 }
             } else
@@ -228,7 +227,7 @@ Bot::adminCommand(const std::vector<std::string> &fields)
     }
 };
 
-// inline void
+// void
 // Bot::unavailbleCommand(const std::vector<std::string> &fields) {
 //     const std::string &client = __GETARGET;
 //     std::string commnad = "PRIVMSG " + client + " :" + fields[3] + "command unavailbe, contact a master";

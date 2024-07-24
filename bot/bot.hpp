@@ -19,9 +19,9 @@ class Bot {
         void            logger(const std::string &message) const;
         bool            masterStatus(const std::string &name) const;
 
-        inline void     pongCommand(const std::vector<std::string> &fields);
-        inline void     welcomeMsg(const std::vector<std::string> &fields);
-        inline void     leaveMsg(const std::vector<std::string> &fields);
+        void     pongCommand(const std::vector<std::string> &fields);
+        void     welcomeMsg(const std::vector<std::string> &fields);
+        void     leaveMsg(const std::vector<std::string> &fields);
         void            helpCommand(const std::vector<std::string> &fields);
         void            jokeCommand(const std::vector<std::string> &fields);
         void            tossCommand(const std::vector<std::string> &fields);
@@ -40,7 +40,7 @@ class Bot {
         void authenticate(std::string password) const;
         void listenForCommand(void);
 
-        ~Bot() {};
+        ~Bot();
 };
 
 #endif

@@ -151,7 +151,6 @@ Bot::startBot(uint16_t port)
     }
 };
 
-
 Bot::~Bot()
 {
     close(this->irc_sock);
