@@ -1,4 +1,4 @@
-#include "bot.hpp"
+#include "../include/ircBot.hpp"
 
 uint16_t
 valid_port(char *port_arg)
@@ -51,12 +51,14 @@ int main (int ac, char **av) {
     {
         try {
             Bot agent; // exeption
-            
-            agent.startBot(port, av[2]);
+
+            agent.startBot(port);
+            agent.authenticate(av[2]);
+            agent.listenForCommand();
 
         } catch (std::exception &e) {
-            std::cout << e.what() << std::endl;
-            return -10;
+            std::cerr << e.what() << std::endl;
+            return -10; // e number
         }
         // std::cout << "am here ma nigga" << std::endl;
         //start
