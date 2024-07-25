@@ -137,7 +137,7 @@ Bot::helpCommand(const std::vector<std::string> &fields)
 {
     std::string command;
     const char *manual[] = MANUAL;
-    const std::string &client = __GETARGET;  // make a loop of 200ms delay between msgs
+    const std::string &client = __GETARGET;
 
     int total = sizeof(manual) / sizeof(manual[0]);
 
