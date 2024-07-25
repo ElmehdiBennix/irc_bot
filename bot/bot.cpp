@@ -61,7 +61,6 @@ Bot::authenticate(std::string password) const
 
     for (int i = 0; i < 3; i++) {
         sendit(this->irc_sock, commands[i]);
-        usleep(200);
         if ((response = recvit(this->irc_sock)) == "")
             continue;
         logger(response);
