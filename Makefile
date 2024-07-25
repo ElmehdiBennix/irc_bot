@@ -1,6 +1,6 @@
 EXE := ircBot
 
-CPP := c++ -std=c++98
+CPP := c++
 
 CPPFLAGS := -g -Wall -Wextra -Wshadow -fsanitize=address
 

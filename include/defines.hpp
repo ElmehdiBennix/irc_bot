@@ -1,5 +1,5 @@
 #if !defined(DEFINES_HPP__)
-#define DEFOMES_HPP__
+#define DEFINES_HPP__
 
 // Settings:
 #define BOT "elgarodumomento"
