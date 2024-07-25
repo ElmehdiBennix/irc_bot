@@ -84,11 +84,11 @@ jsonValue(const std::string& json, const std::string& key) throw()
 };
 
 std::string
-revcit(int sock)
+recvit(int sock)
 {
     int bytes = 0;
     char BUFFER[4096];
-    
+
     if ((bytes = recv(sock, BUFFER, sizeof(BUFFER) - 1, MSG_DONTWAIT)) == -1) {
         return "";
     }
