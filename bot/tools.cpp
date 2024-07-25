@@ -59,7 +59,7 @@ sendit(int sock, std::string& msg)
     // __LOG(msg, BLUE);
     if (send(sock, msg.c_str(), msg.length(), 0) == -1 ) {
         close(sock);
-        throw (std::invalid_argument("Error: send failed."));
+        throw (std::invalid_argument(RED "Error: send failed." RESET));
     }
 };
 
@@ -142,14 +142,14 @@ valid_port(char *port_arg) throw()
     {
         if (!isdigit(port_arg[i]) || i > 5)
         {
-            std::cerr << "ERROR: Port range between 1024 && 65535." << std::endl; 
+            std::cerr << RED "Error: Port range between 1024 && 65535." RESET << std::endl; 
             return 1;
         }
     }
     uint32_t port = atoi(port_arg);
     if (1024 > port || 65535 < port)
     {
-        std::cerr << "ERROR: Port range between 1024 && 65535." << std::endl; 
+        std::cerr << RED "Error: Port range between 1024 && 65535." RESET << std::endl; 
         return 1;
     }
     return port;
@@ -160,7 +160,6 @@ arg_checker(int ac, char **av) throw()
 {
     uint16_t port;
     
-    std::cerr << RED;
     switch (ac)
     {
         case 2 :
@@ -169,7 +168,7 @@ arg_checker(int ac, char **av) throw()
         case 3 :
             break;
         default :
-            std::cerr << "ERROR: IRC Bot requare 2 arguments password can be empty. \n"  "try ./ircbot <port> <password>" << std::endl;
+            std::cerr << RED "Error: IRC Bot requare 2 arguments password can be empty. \n"  "try ./ircbot <port> <password>" RESET << std::endl;
             return 1;
     }
     if (!(port = valid_port(av[1])))

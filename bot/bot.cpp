@@ -7,14 +7,14 @@ Bot::Bot(void)
     std::cout << "whats ur server Nickname master :";
     getline(std::cin, master);
     if(master.empty()) // or has spaces
-        throw (std::invalid_argument( "ERROR: Nickname cant be empty nor have eny spaces in it."));
+        throw (std::invalid_argument(RED "Error: Nickname cant be empty nor have eny spaces in it." RESET));
 
     std::cout << YELLOW "your Nickname is :" << master << RESET << std::endl;
     masters.push_back(master);
     std::cout << "Do you want to continue? [Y/n] ";
     getline(std::cin, master);
     if (master.empty() || (master != "Y" && master != "y"))
-        throw (std::invalid_argument( "ERROR: " BOT ": Quit." ));
+        throw (std::invalid_argument(RED "Error: " BOT ": Quit." RESET));
 
     std::cout << "Do u have an API_KEY from api.openweathermap.org? [Y/n] ";
     if (getline(std::cin, master) && !master.empty() && (master == "Y" || master == "y"))   // optimize this
@@ -33,7 +33,7 @@ Bot::Bot(void)
     }
 
     if ((this->irc_sock = createTCPSock()) == -1)
-        throw (std::invalid_argument( "ERROR: Failed to create socket."));
+        throw (std::invalid_argument(RED "Error: Failed to create socket." RESET));
 
     commandList["PING"] = &Bot::pongCommand;
     commandList["JOIN"] = &Bot::welcomeMsg;
@@ -59,7 +59,7 @@ Bot::authenticate(std::string password) const
     if (password.empty())
         password = "NAN";
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 3; i++) {
         sendit(this->irc_sock, commands[i]);
         usleep(200);
         if ((response = recvit(this->irc_sock)) == "")
@@ -80,7 +80,7 @@ Bot::logger(const std::string &message) const
 
     if __FATAL(code) {
         close(this->irc_sock);
-        throw (std::invalid_argument( "ERROR: "+ message ));
+        throw (std::invalid_argument(RED "Error: " + message + RESET));
     } else if __NONFATAL(code)
         __LOG(message, YELLOW)
     else
@@ -138,20 +138,20 @@ Bot::startBot(uint16_t port)
     getline(std::cin, answer);
     if (answer == "1") {
         if (!connectSockByIp(this->irc_sock, LOCALHOST, port))
-            throw (std::invalid_argument( "ERROR: " RED "Couldnt connect to socket address." RESET));
+            throw (std::invalid_argument(RED "Error: " RED "Couldnt connect to socket address." RESET));
     } else if (answer == "2") {
         std::cout << "Irc Server ip: ";
         getline(std::cin, answer);
         if (!connectSockByIp(this->irc_sock, answer.c_str(), port))
-            throw (std::invalid_argument( "ERROR: " RED "Couldnt connect to socket address." RESET));
+            throw (std::invalid_argument(RED "Error: " RED "Couldnt connect to socket address." RESET));
     } else if (answer == "3") {
         std::cout << "Irc server name: ";
         getline(std::cin, answer);
         if (!connectSockByName(this->irc_sock, answer.c_str(), port))
-            throw (std::invalid_argument( "ERROR: " RED "Couldnt connect to socket address." RESET));
+            throw (std::invalid_argument(RED "Error: " RED "Couldnt connect to socket address." RESET));
     } else {
         close(this->irc_sock);
-        throw (std::invalid_argument( "ERROR: " RED "Only [1/2/3] are allowed." RESET));
+        throw (std::invalid_argument(RED "Error: " RED "Only [1/2/3] are allowed." RESET));
     }
 };
 
