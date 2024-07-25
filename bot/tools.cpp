@@ -167,6 +167,7 @@ arg_checker(int ac, char **av) throw()
             std::cout << YELLOW "WARNING: IRC Bot missing argument <password> its set to null" RESET << std::endl;
             break;
         case 3 :
+            break;
         default :
             std::cerr << "ERROR: IRC Bot requare 2 arguments password can be empty. \n"  "try ./ircbot <port> <password>" << std::endl;
             return 1;
