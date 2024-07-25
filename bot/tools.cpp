@@ -61,6 +61,7 @@ sendit(int sock, std::string& msg)
         close(sock);
         throw (std::invalid_argument(RED "Error: send failed." RESET));
     }
+    usleep(200);
 };
 
 std::string
