@@ -49,20 +49,23 @@ Bot::Bot(void)
 void
 Bot::authenticate(std::string password) const
 {
-    std::string message;
+    std::string response;
+    std::string commands[3] = {
+                                "PASS " + password,
+                                "NICK " BOT,
+                                "USER " BOT " 0 * : " BOT,
+                              };
 
     if (password.empty())
         password = "NAN";
 
-    message = "PASS " + password + "\r\nNICK " BOT "\r\nUSER " BOT " 0 * : " BOT;
-
-    sendit(this->irc_sock, message);
-
-    // usleep(200);
-    // sendit(this->irc_sock, message);
-
-    // usleep(200);
-    // sendit(this->irc_sock, message);
+    for (int i = 0; i < 4; i++) {
+        sendit(this->irc_sock, commands[i]);
+        usleep(200);
+        if ((response = recvit(this->irc_sock)) == "")
+            continue;
+        logger(response);
+    }
 };
 
 void
@@ -89,7 +92,7 @@ Bot::listenForCommand(void)
 {
     while (true) {
         std::string message;
-        if ((message = revcit(this->irc_sock)) == "")
+        if ((message = recvit(this->irc_sock)) == "")
             continue;
 
         message = trimTheSpaces(message);
