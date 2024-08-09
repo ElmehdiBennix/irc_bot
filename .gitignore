@@ -101,7 +101,7 @@ _deps
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
+.vscode
 ### macOS ###
 # General
 .DS_Store
