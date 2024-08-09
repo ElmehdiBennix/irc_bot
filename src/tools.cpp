@@ -56,12 +56,16 @@ void
 sendit(int sock, std::string& msg)
 {
     msg += "\r\n";
+    // generat random time interval so i wont get insta banned
+    srand(time(0));
+    uint random_ms = 250 + rand() % (500 - 250 + 1);
+
     // __LOG(msg, BLUE);
     if (send(sock, msg.c_str(), msg.length(), 0) == -1 ) {
         close(sock);
-        throw (std::invalid_argument(RED "Error: send failed." RESET));
+        throw (std::invalid_argument("Error: send failed."));
     }
-    usleep(200);
+    usleep(random_ms);
 };
 
 std::string
@@ -89,7 +93,7 @@ recvit(int sock)
 {
     int bytes = 0;
     char BUFFER[4096];
-
+    
     if ((bytes = recv(sock, BUFFER, sizeof(BUFFER) - 1, MSG_DONTWAIT)) == -1) {
         return "";
     }
@@ -138,7 +142,7 @@ valid_port(char *port_arg) throw()
 {
     size_t i;
 
-    std::cout << "Port :" << port_arg << std::endl;
+    std::cout << YELLOW "Port :" << port_arg << RESET << std::endl;
     for (i = 0; port_arg[i] ;i++)
     {
         if (!isdigit(port_arg[i]) || i > 5)
@@ -175,4 +179,14 @@ arg_checker(int ac, char **av) throw()
     if (!(port = valid_port(av[1])))
         return 2;
     return port;
+};
+
+std::vector<std::string> splitByDelim(const std::string &str, char delim) {
+    std::vector<std::string> tokens;
+    std::stringstream ss(str);
+    std::string token;
+
+    while (std::getline(ss, token, delim))
+        tokens.push_back(token);
+    return tokens;
 };

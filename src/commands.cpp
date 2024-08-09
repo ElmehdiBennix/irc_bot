@@ -20,11 +20,11 @@ Bot::jokeCommand(const std::vector<std::string> &fields)
 void
 Bot::tossCommand(const std::vector<std::string> &fields)
 {
-    int result;
+    unsigned int result;
     std::string command;
     const std::string &client = __GETARGET;
 
-    srand(static_cast<unsigned int>(time(0)));
+    srand(time(0));
     result = rand() % 2;
 
     command = "PRIVMSG " + client + " :flipping a coin ...";
@@ -137,7 +137,7 @@ Bot::helpCommand(const std::vector<std::string> &fields)
 {
     std::string command;
     const char *manual[] = MANUAL;
-    const std::string &client = __GETARGET;
+    const std::string &client = __GETARGET;  // make a loop of 200ms delay between msgs
 
     int total = sizeof(manual) / sizeof(manual[0]);
 
@@ -150,6 +150,11 @@ Bot::helpCommand(const std::vector<std::string> &fields)
 void
 Bot::welcomeMsg(const std::vector<std::string> &fields)
 {
+    if (fields[0] == BOT) {
+        channels.push_back(fields[2]);
+        return;
+    }
+    
     std::string command = "PRIVMSG " + fields[0] + WELCOME(fields[2]); 
     sendit(this->irc_sock, command);
 };
@@ -157,6 +162,9 @@ Bot::welcomeMsg(const std::vector<std::string> &fields)
 void
 Bot::leaveMsg(const std::vector<std::string> &fields)
 {
+    if (fields[0] == BOT)
+        return;
+
     std::string command = "PRIVMSG " + fields[0] + FAREWELL(fields[2]);
     sendit(this->irc_sock, command);
 };
@@ -164,7 +172,7 @@ Bot::leaveMsg(const std::vector<std::string> &fields)
 void
 Bot::pongCommand(const std::vector<std::string> &fields)
 {
-    std::string command = "PONG " + fields[1];
+    std::string command = "PONG " + ((fields.size() > 2) ? fields[1] : fields[2]);
     sendit(this->irc_sock, command);
 };
 
@@ -182,15 +190,21 @@ Bot::adminCommand(const std::vector<std::string> &fields)
     {
         if (action == "join") {
             if ((it = std::find(channels.begin(), channels.end(), fields[5])) == channels.end()) {
-                command = "JOIN " + fields[5];
-                channels.push_back(fields[5]);
+                if (fields.size() == 6)
+                    command = "JOIN " + fields[5];
+                else
+                    command = "JOIN " + fields[5] + fields[6];
                 sendit(this->irc_sock, command);
             }
         } else if (action == "part") {
-            if ((it = std::find(channels.begin(), channels.end(), fields[5])) != channels.end()) {
-                command = "PART " + fields[5];
-                channels.erase(it);
-                sendit(this->irc_sock, command);
+
+            std::vector<std::string> part = splitByDelim(fields[5], ',');
+            for (std::vector<std::string>::iterator chanIt = part.begin(); chanIt != part.end(); ++it) {                
+                if ((it = std::find(channels.begin(), channels.end(), *chanIt)) != channels.end()) {
+                    command = "PART " + *chanIt;
+                    channels.erase(it);
+                    sendit(this->irc_sock, command);
+                }
             }
         } else if (action == "add") {
             if ((it = std::find(channels.begin(), channels.end(), fields[5])) == channels.end()) {
@@ -206,13 +220,13 @@ Bot::adminCommand(const std::vector<std::string> &fields)
             command = "PRIVMSG " + fields[0];
             if (fields[5] == "masters") {
                 command += " :Masters =";
-                for (const std::string &name: masters) {
-                    command += " " + name;
+                for (it = masters.begin(); it != masters.end(); it++) {
+                    command += " " + *it;
                 }
             } else if (fields[5] == "channels") {
                 command += " :Channels =";
-                for (const std::string &name: channels) {
-                    command += " " + name;
+                for (it = masters.begin(); it != masters.end(); it++) {
+                    command += " " + *it;
                 }
             } else
                 command += SYNXERROR;

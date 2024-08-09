@@ -2,13 +2,15 @@ EXE := ircBot
 
 CPP := c++
 
-CPPFLAGS := -g -Wall -Wextra -Wshadow -fsanitize=address
+CPPFLAGS := -g -Wall -Wextra -Wshadow -fsanitize=address -MMD
 
-HEADER := ./include/defines.hpp ./include/ircBot.hpp ./bot/bot.hpp
+# HEADERS := ./include/defines.hpp ./include/ircBot.hpp ./bot/bot.hpp
 
-SOURCES := ./bot/bot.cpp ./bot/commands.cpp ./bot/tools.cpp ./main.cpp
+SOURCES := ./src/bot.cpp ./src/commands.cpp ./src/tools.cpp ./main.cpp
 
 OBJ := $(SOURCES:.cpp=.o)
+
+DEPS = $(SOURCES:.cpp=.d)
 
 M = MAKE_PUSH
 
@@ -17,13 +19,15 @@ M = MAKE_PUSH
 all : $(EXE)
 
 $(EXE): $(OBJ)
-	$(CPP) $(CPPFLAGS) $(OBJ) -o $(EXE)
+	$(CPP) $(CPPFLAGS) -o $@ $^
 
-%.o: %.cpp $(HEADER)
-	$(CPP) $(CPPFLAGS) -c -o $@ $<
+%.o: %.cpp $(HEADERS)
+	$(CPP) $(CPPFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 clean :
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(DEPS)
 
 fclean : clean
 	rm -rf $(EXE)

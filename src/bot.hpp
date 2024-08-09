@@ -1,7 +1,9 @@
-#if !defined(BOT_HPP__)
+#ifndef BOT_HPP__
 #define BOT_HPP__
 
-#include "../include/ircBot.hpp"
+#include <iostream>
+#include <map>
+#include <vector>
 
 class Bot {
     private:
