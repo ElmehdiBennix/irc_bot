@@ -1,8 +1,8 @@
-#if !defined(DEFINES_HPP__)
-#define DEFINES_HPP__
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 
 // Settings:
-#define BOT "elgarodumomento"
+#define BOT "procs"
 #define LOCALHOST "127.0.0.1"
 
 // Colors:
@@ -128,9 +128,6 @@
 #define PORT 80
 #define KEY "010b99d131be7191865d4110f87f7db3"
 
-// if password is empty string it catches a fatal error // TODO
-// ERR_NOTREGISTERED (451) // TODO ADD IT TO IRC AUTHEN 
-
 // Error codes:
 #define ERR_NONICKNAMEGIVEN 431
 #define ERR_ERRONEUSNICKNAME 432
@@ -142,7 +139,7 @@
 
 
 //NON FATAL ERRORS FOR THE BOT
-#define __NONFATAL(CODE) (false)
+#define __NONFATAL(output) (output == "PING" || output == "ping")
 
 //FATAL ERRORS FOR THE BOT
 #define __FATAL(CODE) (CODE == ERR_NONICKNAMEGIVEN \

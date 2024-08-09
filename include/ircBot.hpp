@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IRCBOT_HPP
+#define IRCBOT_HPP
 
 #include <iostream>
 #include <sys/socket.h>
@@ -9,14 +10,10 @@
 #include <arpa/inet.h> // For inet_pton and sockaddr_in
 #include <map>
 #include <sstream> // stingstream
-#include <string>
 #include <functional> // bind find
-#include <random> //  srand
-#include <stdexcept>
-// #include <fcntl.h>
 
 #include "defines.hpp"
-#include "../bot/bot.hpp"
+#include "../src/bot.hpp"
 
 // TOOLS__
 uint16_t                    valid_port(char *port_arg) throw();
@@ -29,3 +26,6 @@ bool                        connectSockByName(int socket, const char *hostbyname
 void                        sendit(int sock, std::string& msg);
 std::string                 recvit(int sock);
 std::string                 jsonValue(const std::string& json, const std::string& key) throw();
+std::vector<std::string>    splitByDelim(const std::string &str, char delim);
+
+#endif

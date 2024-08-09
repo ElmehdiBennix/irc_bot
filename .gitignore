@@ -144,6 +144,9 @@ Temporary Items
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+*.d
+*.o
+
 # Session
 Session.vim
 Sessionx.vim
@@ -156,6 +159,7 @@ tags
 [._]*.un~
 
 ### VisualStudioCode ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
