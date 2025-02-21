@@ -127,7 +127,7 @@
 // weather command:
 #define HOST "api.openweathermap.org"
 #define PORT 80
-#define KEY "010b99d131be7191865d4110f87f7db3"
+#define KEY "EXAMPLE_API_KEY"
 
 // Error codes:
 #define ERR_NONICKNAMEGIVEN 431
