@@ -26,7 +26,7 @@ Make sure you have the following installed:
 Clone the repository and build the bot:
 
 ```sh
-git clone https://github.com/yourusername/irc_bot.git
+git clone https://github.com/ElmehdiBennix/irc_bot.git
 cd irc_bot
 make
 ```
